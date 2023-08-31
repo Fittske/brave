@@ -1,0 +1,24 @@
+version: '3'
+
+# docker-compose -f docker-compose.dev.yml build
+# docker-compose -f docker-compose.dev.yml up -d
+services:
+  app:
+    build: ./app
+    container_name: flask_brave
+    command: gunicorn --bind 0.0.0.0:5000 app:app # WSGI server
+    environment:
+      - DATABASE_URL=postgresql://brave_user:brave_password@158.160.107.13:5432/weather # путь до бд, см. db service
+    volumes:
+      - ./app:/app
+    expose:
+      - 5000
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./static:/home/web/default/static
+    depends_on:
+      - app
+  
