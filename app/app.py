@@ -9,17 +9,17 @@ from flask_sqlalchemy import SQLAlchemy
 from sshtunnel import SSHTunnelForwarder
 
 with SSHTunnelForwarder(
-         ('158.160.121.78', 22),
+         ('158.160.97.171', 22),
          #ssh_private_key="C:/Users/r3cor/OneDrive/Рабочий стол/pyProj/brave/app/key1",
          ssh_private_key="key1",
          ### in my case, I used a password instead of a private key
          ssh_username="ruslan",
          ssh_password="key1",
-         remote_bind_address=('158.160.121.78', 5432)) as server:
+         remote_bind_address=('158.160.97.171', 5432)) as server:
          server.start() 
          print("server connected")
          app = Flask(__name__)
-         app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://brave_user:brave_password@158.160.121.78:5432/weather"
+         app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://brave_user:brave_password@158.160.97.171:5432/weather"
          app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
          print("database connected")
          app.secret_key = os.urandom(24)
